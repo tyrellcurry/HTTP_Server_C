@@ -1,1 +1,15 @@
-/build
+# Build artifacts
+build/
+*.o
+*.a
+*.so
+*.out
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+
+# Libraries
+lib/
