@@ -1,3 +1,4 @@
+#include "http_handler.h"
 #include <errno.h>
 #include <netinet/in.h>
 #include <netinet/ip.h>
@@ -78,7 +79,7 @@ int main() {
     printf("Failed to parse request line\n");
   }
 
-  const char *http_response = "HTTP/1.1 200 OK\r\n\r\n";
+  const char *http_response = get_http_response(path);
 
   send(client_fd, http_response, strlen(http_response), 0);
 
