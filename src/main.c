@@ -1,9 +1,9 @@
-#include "http_handler.h"
+#include "http.h"
+#include "server.h"
 #include <errno.h>
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -13,15 +13,7 @@ int main() {
   setbuf(stdout, NULL);
   setbuf(stderr, NULL);
 
-  int server_fd;
-  socklen_t client_addr_len;
-  struct sockaddr_in client_addr;
-
-  server_fd = socket(AF_INET, SOCK_STREAM, 0);
-  if (server_fd == -1) {
-    printf("Socket creation failed: %s...\n", strerror(errno));
-    return 1;
-  }
+  int server_fd = generate_server_fd();
 
   // Reuse port
   int reuse = 1;
@@ -49,11 +41,8 @@ int main() {
   }
 
   printf("Waiting for a client to connect...\n");
-  client_addr_len = sizeof(client_addr);
 
-  int client_fd =
-      accept(server_fd, (struct sockaddr *)&client_addr, &client_addr_len);
-  printf("Client connected\n");
+  int client_fd = generate_client_fd(server_fd);
 
   char buffer[4096];
 

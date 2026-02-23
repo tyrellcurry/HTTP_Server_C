@@ -36,3 +36,9 @@ target_link_libraries(test_runner PRIVATE unity server_lib)
 
 # Add test to CTest
 add_test(NAME ServerTests COMMAND test_runner)
+
+# Run tests automatically after build
+add_custom_command(TARGET test_runner POST_BUILD
+  COMMAND ${CMAKE_CTEST_COMMAND} --verbose
+  COMMENT "Running tests..."
+)

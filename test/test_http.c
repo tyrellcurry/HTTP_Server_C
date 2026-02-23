@@ -1,13 +1,12 @@
+#include "unity_internals.h"
 #define UNITY_VERBOSE_OUTPUT
-#include "http_handler.h"
+#include "http.h"
 #include "unity.h"
 #include <string.h>
 
-void setUp(void) {
-}
+void setUp(void) {}
 
-void tearDown(void) {
-}
+void tearDown(void) {}
 
 /**
  * Test: Parse HTTP path
