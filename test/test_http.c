@@ -4,7 +4,9 @@
 #include "unity.h"
 #include <string.h>
 
-void setUp(void) {}
+char buffer[4096];
+
+void setUp(void) { strcpy(buffer, "GET /hello HTTP/1.1"); }
 
 void tearDown(void) {}
 
@@ -21,9 +23,19 @@ void test_other_path_returns_404(void) {
   TEST_ASSERT_TRUE(strstr(response, "404") != NULL);
 }
 
+void test_parse_line_request() {
+  char method[16], path[256], version[16];
+  int result = parse_request_line(buffer, method, path, version);
+  TEST_ASSERT_EQUAL(0, result);
+  TEST_ASSERT_EQUAL_STRING("GET", method);
+  TEST_ASSERT_EQUAL_STRING("/hello", path);
+  TEST_ASSERT_EQUAL_STRING("HTTP/1.1", version);
+}
+
 int main(void) {
   UNITY_BEGIN();
   RUN_TEST(test_root_path_returns_200);
   RUN_TEST(test_other_path_returns_404);
+  RUN_TEST(test_parse_line_request);
   return UNITY_END();
 }
